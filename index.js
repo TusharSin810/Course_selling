@@ -4,8 +4,9 @@ const {userRouter} = require("./routes/user")
 const { courseRouter } = require("./routes/course")
 const {adminRouter} = require("./routes/admin")
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 
-dotenv.config({path:'./env'});
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -17,7 +18,8 @@ app.use("/api/v1/admin", adminRouter)
 
 
 async function main() {
-    await mongoose.connect(process.env.MONGODB_URI)
+    const uri = process.env.MONGODB_URI;
+    await mongoose.connect(uri)
         .then(() => console.log('Database connected'))
         .catch((err) => console.log('Database connection error:', err));
     
