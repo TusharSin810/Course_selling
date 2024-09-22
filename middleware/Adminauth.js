@@ -19,8 +19,5 @@ function Adminauth(req, res, next) {
 }
 
 module.exports = {
-    Userauth,
     Adminauth,
-    JWT_SECRET_USER,
-    JWT_SECRET_ADMIN
 };
