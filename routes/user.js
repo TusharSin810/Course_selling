@@ -1,8 +1,10 @@
 const {Router} = require("express");
 const {bcrypt}= require('bcrypt');
 const {z} = require('zod');
-const {UserModel} = require('../db');
+const {UserModel, PurchaseModel, CourseModel} = require('../db');
 const {JWT_SECRET_USER} = require('../config');
+const { Userauth } = require("../middleware/Userauth");
+const course = require("./course");
 
 const userRouter = Router();
 
@@ -84,8 +86,22 @@ userRouter.post('/signup',async (req,res) =>{
     }
 });
 
-userRouter.get('/purchases', (req,res) => {
+userRouter.get('/purchases', Userauth, async (req,res) => {
+    const userId = req.userId;
 
+    const purchases = await PurchaseModel.find({
+        userId,
+    })
+
+    const coursesData = await CourseModel.find({
+        _id: {$in: purchases.map(x => x.courseId)}
+    })
+
+    res.json({
+        message: "These are your all courses",
+        purchases,
+        coursesData
+    })
 });
 
 module.exports = {
