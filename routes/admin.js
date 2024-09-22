@@ -2,7 +2,7 @@ const {Router} = require("express");
 const {adminModel, AdminModel} = require("../db");
 const {bcrypt}= require('bcrypt');
 const {z} = require('zod');
-const {JWT_SECRET_ADMIN} = require('../auth');
+const {JWT_SECRET_ADMIN} = require('../config');
 
 const adminRouter = Router();
 

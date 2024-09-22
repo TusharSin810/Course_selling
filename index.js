@@ -1,10 +1,10 @@
 const express = require("express")
-const jwt = require("jsonwebtoken")
 const {userRouter} = require("./routes/user")
 const { courseRouter } = require("./routes/course")
 const {adminRouter} = require("./routes/admin")
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const {MONGODB_URI} = require('./config');
 
 dotenv.config();
 
@@ -18,8 +18,7 @@ app.use("/api/v1/admin", adminRouter)
 
 
 async function main() {
-    const uri = process.env.MONGODB_URI;
-    await mongoose.connect(uri)
+     await mongoose.connect(MONGODB_URI)
         .then(() => console.log('Database connected'))
         .catch((err) => console.log('Database connection error:', err));
     
